@@ -17,12 +17,10 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register' , ]]);
     }
 
     /**
-     * Get a JWT via given credentials.
-     *
      * @param Request $request
      * @return JsonResponse
      * @throws ValidationException
@@ -73,39 +71,6 @@ class AuthController extends Controller
             'message' => 'User successfully registered',
             'user' => $user
         ], 201);
-    }
-
-
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return JsonResponse
-     */
-    public function logout(): JsonResponse
-    {
-        auth()->logout();
-
-        return response()->json(['message' => 'User successfully signed out']);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return JsonResponse
-     */
-    public function refresh(): JsonResponse
-    {
-        return $this->createNewToken(auth()->refresh());
-    }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return JsonResponse
-     */
-    public function userProfile(): JsonResponse
-    {
-        return response()->json(auth()->user());
     }
 
     /**
