@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -21,7 +23,9 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @param Request $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function login(Request $request): JsonResponse
     {
@@ -44,7 +48,9 @@ class AuthController extends Controller
     /**
      * Register a User.
      *
+     * @param Request $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function register(Request $request): JsonResponse
     {
@@ -109,7 +115,7 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    protected function createNewToken($token): JsonResponse
+    protected function createNewToken(string $token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,
